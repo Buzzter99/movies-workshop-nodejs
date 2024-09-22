@@ -1,4 +1,4 @@
-const data = require('./data/movies.json');
+const data = require('../data/movies.json');
 function getMovies() {
     return data;
 }
@@ -23,16 +23,7 @@ function getMovieById(id){
     }
     return movie; 
 }
-class Movie {
-    constructor(id, title, genre, director, year, imageURL,rating,description) {
-        this.id = id;
-        this.title = title;
-        this.genre = genre;
-        this.director = director;
-        this.year = year;
-        this.imageURL = imageURL;
-        this.rating = rating;
-        this.description = description;
-    }
+function generateMovieId() {
+    return getMovies().length == 0 ? 1 : getMovies().sort((a,b) => b.id - a.id)[0].id + 1;
 }
-module.exports = {getMovies,searchMovies,getMovieById}
+module.exports = {getMovies,searchMovies,getMovieById,generateMovieId}

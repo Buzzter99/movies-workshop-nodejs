@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {getMovies, searchMovies,getMovieById} = require('../dal');
+const {getMovies, searchMovies,getMovieById} = require('../services/movieService');
 router.get('/', (req, res) => {
     res.render('home', {movies: getMovies()});
 });
