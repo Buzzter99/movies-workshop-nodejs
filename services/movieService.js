@@ -1,13 +1,9 @@
-const data = require('../data/movies.json');
-const movieModel = require('../models/movie');
-const fs = require('fs');
-const path = require('path');
-const filePath = path.join(__dirname, '../data/movies.json');
-function getMovies() {
-    return data;
+const Movie = require('../models/Movie');
+async function getMovies() {
+    return await Movie.find().lean();
 }
-function searchMovies(movieTerm) {
-    let movies = getMovies();
+async function searchMovies(movieTerm) {
+    let movies = await getMovies();
     if(movieTerm.title) {
         movies = movies.filter((movie) => movie.title.toUpperCase().includes(movieTerm.title.toUpperCase()));
     };
@@ -17,39 +13,32 @@ function searchMovies(movieTerm) {
     if(movieTerm.year) {
         movies = movies.filter((movie) => movie.year == movieTerm.year);
     };
-    return movies.length == 0 ? getMovies() : movies;
+    return movies.length == 0 ? await getMovies() : movies;
 }
-function getMovieById(id){
-    const movie = data.find((movie) => movie.id === id);
+async function getMovieById(id){
+    const movie = await Movie.findById(id).lean();
     const stars = '&#x2605;';
     if(movie) {
         movie.stars = stars.repeat(Math.ceil(movie.rating));
     }
     return movie; 
 }
-function generateMovieId() {
-    const movies = getMovies();
-    return String(Number(movies.length == 0 ? 1 : movies.sort((a,b) => b.id - a.id)[0].id) + 1);
-}
 
-function saveMovie(movie) {
+async function saveMovie(movie) {
     const errors = isMovieValid(movie);
     if(errors.length > 0) {
         throw new Error(JSON.stringify(errors));
     }
-    const newMovie = new movieModel(generateMovieId(), movie.title, movie.genre, movie.director, movie.year, movie.imageURL, movie.rating, movie.description);
-    saveMovieToDb(newMovie);
-}
-function saveMovieToDb(movie) {
-    data.push(movie);
-    const jsonData = JSON.stringify(data, null, 2);
-    fs.writeFile(filePath, jsonData, (err) => {
-        if (err) {
-            console.error('Error writing to JSON file', err);
-        } else {
-            console.log('New movie added and data saved to JSON file');
-        }
+    const newMovie = new Movie({
+        title: movie.title,
+        genre: movie.genre,
+        director: movie.director,
+        year: movie.year,
+        imageURL: movie.imageURL,
+        rating: movie.rating,
+        description: movie.description
     });
+    await newMovie.save();
 }
 function isMovieValid(movie) {
     const errors = [];
@@ -82,4 +71,4 @@ function isMovieValid(movie) {
     };
     return errors;
 }
-module.exports = {getMovies,searchMovies,getMovieById,generateMovieId,saveMovie}
+module.exports = {getMovies,searchMovies,getMovieById,saveMovie}

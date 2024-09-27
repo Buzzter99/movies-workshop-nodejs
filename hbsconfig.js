@@ -1,4 +1,5 @@
 const {engine} = require('express-handlebars');
+const { register } = require('module');
 const path = require('path');
 
 function hbsConfig(app) {
