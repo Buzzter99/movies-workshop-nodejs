@@ -26,7 +26,7 @@ router.post('/create', async (req, res) => {
     try {
     await saveMovie(req.body);
     } catch (error) {
-        res.status(400).send(res.json(error.message));
+        res.status(400).send(error.message);
         return;
     }
     res.redirect('/');

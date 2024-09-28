@@ -24,9 +24,7 @@ async function getMovieById(id){
     return movie; 
 }
 async function saveMovie(movie) {
-    const newMovie = new Movie({
-        title: movie.title,genre: movie.genre,director: movie.director,year: movie.year,imageURL: movie.imageURL,rating: movie.rating,description: movie.description
-    });
+    const newMovie = await Movie.create(movie);
     await newMovie.save();
 }
 module.exports = {getMovies,searchMovies,getMovieById,saveMovie}
