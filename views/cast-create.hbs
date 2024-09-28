@@ -6,7 +6,7 @@
     <title>Create Cast Page</title>
 
     <!-- Do not forget to change the path to the css file -->
-    <link href="./static/css/style.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/style.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
@@ -18,11 +18,11 @@
             <img src="https://cdn.pixabay.com/photo/2013/07/13/13/36/film-161204_1280.png" alt="logo">
 
             <ul class="menu">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Create Post</a></li>
-                <li><a href="#">Create Cast</a></li>
-                <li><a href="#">Search</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/create">Create Post</a></li>
+                <li><a href="/search">Search</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/cast/create">Create Cast</a></li>
             </ul>
 
         </nav>
@@ -35,28 +35,28 @@
                         <h2>"You're gonna need a bigger boat." — "Jaws," 1975.</h2>
                     </div>
 
-                    <form action="#" method="" class="createCastForm">
+                    <form method="post" class="createCastForm">
                         <h2>Add Cast</h2>
                         <ul class="noBullet">
                             <li>
                                 <label for="name">Name:</label>
-                                <input type="text" class="inputFields" id="name" name="" value="" />
+                                <input type="text" class="inputFields" id="name" name="name" value="" />
                             </li>
                             <li>
                                 <label for="age">Age:</label>
-                                <input type="number" class="inputFields" id="age" name="" value="" />
+                                <input type="number" class="inputFields" id="age" name="age" value="" />
                             </li>
                             <li>
                                 <label for="born">Born:</label>
-                                <input type="text" class="inputFields" id="born" name="" value="" />
+                                <input type="text" class="inputFields" id="born" name="born" value="" />
                             </li>
                             <li>
                                 <label for="name-in-movie">Name in Movie:</label>
-                                <input type="text" class="inputFields" id="name-in-movie" name="" value="" />
+                                <input type="text" class="inputFields" id="name-in-movie" name="nameInMovie" value="" />
                             </li>
                             <li>
                                 <label for="image">Cast Image:</label>
-                                <input type="text" class="inputFields" id="image" name="" value="" />
+                                <input type="text" class="inputFields" id="image" name="castImage" value="" />
                             </li>
                             <li id="center-btn">
                                 <button id="create-btn">Add Cast</button>
@@ -66,16 +66,11 @@
 
                 </div>
             </section>
-
         </main>
-
-
         <footer>
             © JS Back-End Workshop
         </footer>
     </div>
-
-
 </body>
 
 </html>

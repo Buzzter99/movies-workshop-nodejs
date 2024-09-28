@@ -4,9 +4,9 @@ const MovieSchema = new Schema({
     title: {type: String,required: true},
     genre: {type: String,required: true},
     director: {type: String,required: true},
-    year: {type: Number,required: true},
-    imageURL: {type: String,required: true},
-    rating: {type: Number,required: true},
+    year: {type: Number,required: true,min: 1900,max: 2100},
+    imageURL: {type: String,required: true,match: /^(http|https):\/\/.*\.(jpg|jpeg)$/},
+    rating: {type: Number,required: true,min:1,max:5},
     description: {type: String,required: true},
     cast: {type: Schema.Types.ObjectId,required: false,ref: 'Cast'},
   });
