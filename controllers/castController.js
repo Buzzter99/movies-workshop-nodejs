@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const {createCast} = require('../services/castService');
+const {createCast, getAllCasts, findByIdAndUpdateCast} = require('../services/castService');
+const {getMovieById,findByIdAndUpdateMovie} = require('../services/movieService');
 router.get('/cast/create', async (req, res) => {
     res.render('cast-create');
 });
@@ -11,5 +12,31 @@ router.post('/cast/create', async (req, res) => {
         return;
     }
     res.redirect('/');
-})
+});
+router.get('/cast/attach/:id', async (req, res) => {
+    let movie;
+    let casts;
+    try {
+    movie = await getMovieById(req.params.id,'title imageURL');
+    casts = await getAllCasts('name');
+    } catch (error) {
+        res.render(error.message);
+        return;
+    }
+    if(movie && casts) {
+        res.render('cast-attach', {movie, casts});
+        return;
+    }
+    res.render('404');
+});
+router.post('/cast/attach/:id', async (req, res) => {
+    try {
+        await findByIdAndUpdateCast(req.body.cast, req.params.id);
+        await findByIdAndUpdateMovie(req.body.cast, req.params.id);
+    } catch (error) {
+        res.render(error.message);
+        return;
+    }
+    res.redirect('/');
+});
 module.exports = router;

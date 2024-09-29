@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {getMovies, searchMovies,getMovieById,saveMovie} = require('../services/movieService');
+const {getMovies, searchMovies,saveMovie,getMoviesForDetailsPage} = require('../services/movieService');
 router.get('/', async (req, res) => {
     res.render('home', {movies: await getMovies()});
 });
@@ -11,12 +11,18 @@ router.get('/search', async (req, res) => {
     res.render('search', {movies: data, query: req.query});
 });
 router.get('/details/:id', async (req, res) => {
-    const movie = await getMovieById(req.params.id);
-    if(movie) {
-        res.render('details', {movie});
+    let movie;
+    try {
+        movie = await getMoviesForDetailsPage(req.params.id);
+    } catch (error) {
+        res.render(error.message);
         return;
     }
+    if(movie) {
+        res.render('details', {movie});
+    }
     res.render('404');
+    return;
 });
 router.get('/create', (req, res) => {
     res.render('create');

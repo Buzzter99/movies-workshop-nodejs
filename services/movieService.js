@@ -1,6 +1,6 @@
 const Movie = require('../models/Movie');
-async function getMovies() {
-    return await Movie.find().lean();
+async function getMovies(...args) {
+    return await Movie.find({}, ...args).lean();
 }
 async function searchMovies(movieTerm) {
     let movies = await getMovies();
@@ -15,16 +15,25 @@ async function searchMovies(movieTerm) {
     };
     return movies.length == 0 ? await getMovies() : movies;
 }
-async function getMovieById(id){
-    const movie = await Movie.findById(id).lean();
-    const stars = '&#x2605;';
+async function getMovieById(id,...args) {
+    return await Movie.findById(id, ...args).lean();
+}
+async function getMoviesForDetailsPage(id) {
+    const movie = await getMovieById(id);
     if(movie) {
+        const stars = '&#x2605;';
         movie.stars = stars.repeat(Math.ceil(movie.rating));
     }
-    return movie; 
+    return movie;
 }
 async function saveMovie(movie) {
     const newMovie = await Movie.create(movie);
     await newMovie.save();
 }
-module.exports = {getMovies,searchMovies,getMovieById,saveMovie}
+
+async function findByIdAndUpdateMovie(castId, movieId) {
+    const movie = await Movie.findById(movieId);
+    movie.cast.push(castId);
+    await movie.save();
+}
+module.exports = {getMovies,searchMovies,getMovieById,saveMovie,getMoviesForDetailsPage,findByIdAndUpdateMovie}
