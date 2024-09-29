@@ -19,12 +19,15 @@ async function getMovieById(id,...args) {
     return await Movie.findById(id, ...args).lean();
 }
 async function getMoviesForDetailsPage(id) {
-    const movie = await getMovieById(id);
+    const movie = await findAndPopulate(id);
     if(movie) {
         const stars = '&#x2605;';
         movie.stars = stars.repeat(Math.ceil(movie.rating));
     }
     return movie;
+}
+async function findAndPopulate(id) {
+    return await Movie.findById(id).populate('cast').lean();
 }
 async function saveMovie(movie) {
     const newMovie = await Movie.create(movie);

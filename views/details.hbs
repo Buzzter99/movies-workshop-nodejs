@@ -7,8 +7,10 @@
 </head>
 <body>
     <div id="box">
+
         <nav>
             <img src="/static/img/logo.webp" alt="logo">
+
             <ul class="menu">
                 <li><a href="/">Home</a></li>
                 <li><a href="/create">Create Post</a></li>
@@ -30,8 +32,7 @@
                                 </div>
                                 <div class="second-info">
                                     <p class="card-year">Year: {{movie.year}}</p>
-                                    <p class="card-ranking">Rating: <span id="stars">{{{movie.stars}}}</span></p>
-                                </div>
+                                    <p class="card-ranking">Rating: <span id="stars">{{{movie.stars}}}</span></p></div>
                             </div>
                             <p class="disc">Description: {{movie.description}}</p>
                         </div>
@@ -40,11 +41,29 @@
                         <img src="{{movie.imageURL}}" alt="image">
                     </div>
                 </div>
-            </section>
-        </main>
-        <footer>
-            © JS Back-End Workshop
-        </footer>
+                <div class="main-cast-card">
+                    {{#each movie.cast}}
+                    <div class="cast-card">
+                        <div class="card-img">
+                            <img src="{{castImage}}" alt="cast">
+                        </div>
+                        <div class="cast-info">
+                            <h1>{{name}}</h1>
+                            <h3>Age: {{age}}</h3>
+                            <h3>Born: {{born}}</h3>
+                            <h3>Name in Movie: N\A</h3>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
     </div>
+    </section>
+    </main>
+    <footer>
+        © JS Back-End Workshop
+    </footer>
+    </div>
+
 </body>
+
 </html>

@@ -20,9 +20,10 @@ router.get('/details/:id', async (req, res) => {
     }
     if(movie) {
         res.render('details', {movie});
+        return;
     }
     res.render('404');
-    return;
+    
 });
 router.get('/create', (req, res) => {
     res.render('create');
