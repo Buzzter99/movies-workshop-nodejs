@@ -32,7 +32,7 @@ router.get('/cast/attach/:id', async (req, res) => {
 router.post('/cast/attach/:id', async (req, res) => {
     try {
         await findByIdAndUpdateCast(req.body.cast, req.params.id);
-        await findByIdAndUpdateMovie(req.body.cast, req.params.id);
+        await findByIdAndUpdateMovie(req.body.cast, req.params.id,req.body.nameInMovie);
     } catch (error) {
         res.render(error.message);
         return;

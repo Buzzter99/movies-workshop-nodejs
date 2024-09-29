@@ -8,7 +8,11 @@ const MovieSchema = new Schema({
     imageURL: {type: String,required: true,match: /^(http|https):\/\/.*\.(jpg|jpeg)$/},
     rating: {type: Number,required: true,min:1,max:5},
     description: {type: String,required: true},
-    cast: [{type: Schema.Types.ObjectId,required: false,ref: 'Cast'}],
+    cast: [{
+      NameInMovie: {type: String,required: false},
+      ref:{type: Schema.Types.ObjectId,required: false,ref: 'Cast'},_id: false
+    },
+  ],
   });
 const Movie = mongoose.model('Movie', MovieSchema)
 module.exports = Movie

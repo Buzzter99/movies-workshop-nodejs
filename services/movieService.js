@@ -27,16 +27,19 @@ async function getMoviesForDetailsPage(id) {
     return movie;
 }
 async function findAndPopulate(id) {
-    return await Movie.findById(id).populate('cast').lean();
+    return await Movie.findById(id).populate('cast.ref').lean();
 }
 async function saveMovie(movie) {
     const newMovie = await Movie.create(movie);
     await newMovie.save();
 }
 
-async function findByIdAndUpdateMovie(castId, movieId) {
+async function findByIdAndUpdateMovie(castId, movieId,nameInMovie) {
     const movie = await Movie.findById(movieId);
-    movie.cast.push(castId);
+    if(!nameInMovie) {
+        throw new Error('Name in movie is required');
+    }
+    movie.cast.push({NameInMovie:nameInMovie,ref:castId});
     await movie.save();
 }
 module.exports = {getMovies,searchMovies,getMovieById,saveMovie,getMoviesForDetailsPage,findByIdAndUpdateMovie}
