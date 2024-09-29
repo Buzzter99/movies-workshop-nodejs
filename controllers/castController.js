@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {createCast, getAllCasts, findByIdAndUpdateCast} = require('../services/castService');
+const {createCast, findByIdAndUpdateCast,getAllCastsExcept} = require('../services/castService');
 const {getMovieById,findByIdAndUpdateMovie} = require('../services/movieService');
 router.get('/cast/create', async (req, res) => {
     res.render('cast-create');
@@ -18,7 +18,7 @@ router.get('/cast/attach/:id', async (req, res) => {
     let casts;
     try {
     movie = await getMovieById(req.params.id,'title imageURL');
-    casts = await getAllCasts('name');
+    casts = await getAllCastsExcept(req.params.id);
     } catch (error) {
         res.render(error.message);
         return;

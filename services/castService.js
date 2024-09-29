@@ -11,8 +11,10 @@ async function findByIdAndUpdateCast(castId, movieId) {
     cast.movie.push(movieId);
     await cast.save();
 }
-
+async function getAllCastsExcept(movieId){
+    return await Cast.find({ movie: { $nin: [movieId] } }).lean();
+}
 async function getCastById(id) {
     return await Cast.findById(id).lean();
 }
-module.exports = {createCast, getAllCasts, findByIdAndUpdateCast,getCastById}
+module.exports = {createCast, getAllCasts, findByIdAndUpdateCast,getCastById,getAllCastsExcept}
