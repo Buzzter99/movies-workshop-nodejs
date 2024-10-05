@@ -5,7 +5,8 @@ const path = require('path');
 function hbsConfig(app) {
     app.engine('hbs', engine({
         extname: 'hbs', 
-        defaultLayout: false
+        defaultLayout: false,
+        partialsDir: path.join(__dirname, 'views/partials'),
     }));
     app.set('view engine', 'hbs');
     app.set('views', 'views');
