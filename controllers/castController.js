@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const {createCast, findByIdAndUpdateCast,getAllCastsExcept} = require('../services/castService');
 const {getMovieById,findByIdAndUpdateMovie} = require('../services/movieService');
-router.get('/cast/create', async (req, res) => {
+const {privateEndpoint} = require('../middlewares/authenticationMiddleware');
+router.get('/cast/create',privateEndpoint, async (req, res) => {
     res.render('cast-create');
 });
-router.post('/cast/create', async (req, res) => {
+router.post('/cast/create',privateEndpoint, async (req, res) => {
     try {
         await createCast(req.body);
     } catch (error) {
@@ -13,7 +14,7 @@ router.post('/cast/create', async (req, res) => {
     }
     res.redirect('/');
 });
-router.get('/cast/attach/:id', async (req, res) => {
+router.get('/cast/attach/:id',privateEndpoint, async (req, res) => {
     let movie;
     let casts;
     try {
@@ -29,7 +30,7 @@ router.get('/cast/attach/:id', async (req, res) => {
     }
     res.render('404');
 });
-router.post('/cast/attach/:id', async (req, res) => {
+router.post('/cast/attach/:id',privateEndpoint, async (req, res) => {
     try {
         await findByIdAndUpdateCast(req.body.cast, req.params.id);
         await findByIdAndUpdateMovie(req.body.cast, req.params.id,req.body.nameInMovie);

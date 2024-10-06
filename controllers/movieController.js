@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const {getMovies, searchMovies,saveMovie,getMoviesForDetailsPage} = require('../services/movieService');
-router.get('/', async (req, res) => {
+const {privateEndpoint} = require('../middlewares/authenticationMiddleware');
+router.get('/',async (req, res) => {
+    //console.log(res.user);
     res.render('home', {movies: await getMovies()});
 });
 router.get('/about', (req, res) => {
@@ -25,11 +27,11 @@ router.get('/details/:id', async (req, res) => {
     res.render('404');
     
 });
-router.get('/create', (req, res) => {
+router.get('/create',privateEndpoint,(req, res) => {
     res.render('create');
 });
 
-router.post('/create', async (req, res) => {
+router.post('/create',privateEndpoint,async (req, res) => {
     try {
     await saveMovie(req.body);
     } catch (error) {
