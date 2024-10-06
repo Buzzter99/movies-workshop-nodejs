@@ -1,15 +1,5 @@
 const router = require('express').Router();
-const {
-    getMovies, 
-    getMovieById,
-    searchMovies,
-    saveMovie,
-    getMoviesForDetailsPage,
-    deleteMovie,
-    findByIdAndUpdate,
-    getMoviesForHomePage,
-    compareOwnershipForMovie
-} = require('../services/movieService');
+const {getMovies, getMovieById,searchMovies,saveMovie,getMoviesForDetailsPage,deleteMovie,findByIdAndUpdate,getMoviesForHomePage,compareOwnershipForMovie} = require('../services/movieService');
 const {privateEndpoint} = require('../middlewares/authenticationMiddleware');
 router.get('/',async (req, res) => {
     res.render('home', {movies: await getMoviesForHomePage(res.user?._id)});
@@ -59,7 +49,7 @@ router.get('/delete/:id',privateEndpoint, async (req, res) => {
     }
     res.redirect('/');
 });
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id',privateEndpoint ,async (req, res) => {
     const id = req.params.id;
     const movie = await getMovieById(id);
     if(movie) {
@@ -68,7 +58,7 @@ router.get('/edit/:id', async (req, res) => {
     }
     res.redirect('404');
 })
-router.post('/edit/:id', async (req, res) => {
+router.post('/edit/:id',privateEndpoint ,async (req, res) => {
     const id = req.params.id;
     try {
         await findByIdAndUpdate(id, req.body);
