@@ -1,7 +1,8 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const JWT_KEY = 'secret';
+const env = require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
 async function registerUser({email, password,repeatPassword}) {
     if(password !== repeatPassword) {
         throw new Error('Passwords do not match');
@@ -12,7 +13,6 @@ async function registerUser({email, password,repeatPassword}) {
     }
     await new User({email, password}).save();
 }
-
 async function loginUser({email, password}) {
     const user = await User.findOne({email});
     if(!user) {
@@ -23,7 +23,7 @@ async function loginUser({email, password}) {
         throw new Error('Wrong password');
     }
     const payload = {email: user.email, _id: user._id};
-    const token = jwt.sign(payload, JWT_KEY, {expiresIn: '2h'});
+    const token = jwt.sign(payload, JWT_SECRET, {expiresIn: '2h'});
     return token;
 }
 module.exports = {registerUser,loginUser}

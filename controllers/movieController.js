@@ -2,7 +2,6 @@ const router = require('express').Router();
 const {getMovies, getMovieById,searchMovies,saveMovie,getMoviesForDetailsPage,deleteMovie,findByIdAndUpdate} = require('../services/movieService');
 const {privateEndpoint} = require('../middlewares/authenticationMiddleware');
 router.get('/',async (req, res) => {
-    //console.log(res.user);
     res.render('home', {movies: await getMovies()});
 });
 router.get('/about', (req, res) => {

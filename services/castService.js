@@ -17,4 +17,10 @@ async function getAllCastsExcept(movieId){
 async function getCastById(id) {
     return await Cast.findById(id).lean();
 }
-module.exports = {createCast, getAllCasts, findByIdAndUpdateCast,getCastById,getAllCastsExcept}
+module.exports = {
+    createCast, 
+    getAllCasts, 
+    findByIdAndUpdateCast,
+    getCastById,
+    getAllCastsExcept
+}

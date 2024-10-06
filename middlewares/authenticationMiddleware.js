@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const JWT_KEY = 'secret';
+const env = require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
 async function authenticationMiddleware(req,res,next) {
     const token = req.cookies?.auth;
     if(!token) {
@@ -7,7 +8,7 @@ async function authenticationMiddleware(req,res,next) {
     }
     let payload;
     try {
-        payload = jwt.verify(token, JWT_KEY);
+        payload = jwt.verify(token, JWT_SECRET);
     } catch (error) {
         res.clearCookie('auth');
         res.redirect('/users/login');

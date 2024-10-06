@@ -37,7 +37,6 @@ async function saveMovie(movie) {
   const newMovie = await Movie.create(movie);
   await newMovie.save();
 }
-
 async function findByIdAndUpdateMovieForCast(castId, movieId, nameInMovie) {
   const movie = await Movie.findById(movieId);
   if (!nameInMovie) {
@@ -46,7 +45,6 @@ async function findByIdAndUpdateMovieForCast(castId, movieId, nameInMovie) {
   movie.cast.push({ NameInMovie: nameInMovie, ref: castId });
   await movie.save();
 }
-
 async function findByIdAndUpdate(id, movie){
     await Movie.findByIdAndUpdate(id,movie);
 }
