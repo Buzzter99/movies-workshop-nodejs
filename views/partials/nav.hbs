@@ -1,12 +1,13 @@
-{{#if user}}
 <li><a href="/">Home</a></li>
 <li><a href="/search">Search</a></li>
 <li><a href="/about">About</a></li>
+{{#if user}}
 <li><a href="/cast/create">Create Cast</a></li>
 <li><a href="/create">Create Post</a></li>
 <li><a href="/users/logout">Logout</a></li>
-{{/if}}
+{{else}}
 <li><a href="/users/login">Login</a></li>
 <li><a href="/users/register">Register</a></li>
+{{/if}}
 
 
