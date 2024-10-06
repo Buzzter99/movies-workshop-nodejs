@@ -12,7 +12,7 @@ router.post('/users/login', async (req, res) => {
         res.status(400).send(error.message);
         return;
     }
-    res.cookie('auth', token, {httpOnly: true});
+    res.cookie('auth', token, {httpOnly: true,maxAge: 2 * 60 * 60 * 1000});
     res.redirect('/');
 })
 

@@ -1,61 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>Create Page</title>
-    <link href="./static/css/style.css" type="text/css" rel="stylesheet">
+    <title>Edit Page</title>
+    <link href="/static/css/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
     <div id="box">
         <nav>
-            <img src="https://cdn.pixabay.com/photo/2013/07/13/13/36/film-161204_1280.png" alt="logo">
-
+            <img src="/static/img/logo.webp" alt="logo">
             <ul class="menu">
                 {{> nav}}
             </ul>
         </nav>
         <main>
-            <section id="create-page">
-                <div class="createSection">
-                    <div class="info">
-                        <h2>"Today, I consider myself the luckiest man on the face of the earth." -The Pride of the Yankees, 1942</h2>
+            <section id="edit-page">
+                <div class="editSection">
+                    <div class="info-edit">
+                        <h2>"One ring to rule them all, one ring to find them, one ring to bring them all and in the darkness bind them."</h2>
                     </div>
-                    <form action="/create" method="post" class="createForm">
-                        <h2>Add Movie</h2>
+                    <form action="/Edit/{{movie._id}}" method="POST" class="editForm">
+                        <h2>Edit Post</h2>
                         <ul class="noBullet">
                             <li>
                                 <label for="title">Title:</label>
-                                <input type="text" class="inputFields" id="title" name="title" value="" />
+                                <input type="text" class="inputFields" id="title" name="title" value="{{movie.title}}" />
                             </li>
                             <li>
                                 <label for="genre">Genre:</label>
-                                <input type="text" class="inputFields" id="genre" name="genre" value="" />
+                                <input type="text" class="inputFields" id="genre" name="genre" value="{{movie.genre}}" />
                             </li>
                             <li>
                                 <label for="director">Director:</label>
-                                <input type="text" class="inputFields" id="director" name="director" value="" />
+                                <input type="text" class="inputFields" id="director" name="director" value="{{movie.director}}" />
                             </li>
                             <li>
                                 <label for="date">Year:</label>
-                                <input type="number" class="inputFields" id="year" name="year" value="" />
+                                <input type="number" class="inputFields" id="year" name="year" value="{{movie.year}}" />
                             </li>
                             <li>
                                 <label for="image">Movie Poster:</label>
-                                <input type="text" class="inputFields" id="image" name="imageURL" value="" />
+                                <input type="text" class="inputFields" id="image" name="imageURL" value="{{movie.imageURL}}" />
                             </li>
                             <li>
                                 <label for="image">Rating:</label>
                                 <input type="number" class="inputFields" id="rating" 
                                 onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" 
-                                name="rating" value="" />
+                                name="rating" value="{{movie.rating}}" />
                             </li>
                             <li>
                                 <label for="description">Description:</label>
-                                <textarea id="description" class="inputFields" name="description"></textarea>
+                                <textarea id="description" class="inputFields" name="description">{{movie.description}}</textarea>
                             </li>
                             <li id="center-btn">
-                                <button id="create-btn">Add Movie</button>
+                                <button id="create-btn">Edit</button>
                             </li>
                         </ul>
                     </form>
@@ -67,5 +65,4 @@
         </footer>
     </div>
 </body>
-
 </html>

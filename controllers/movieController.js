@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {getMovies, searchMovies,saveMovie,getMoviesForDetailsPage} = require('../services/movieService');
+const {getMovies, getMovieById,searchMovies,saveMovie,getMoviesForDetailsPage,deleteMovie,findByIdAndUpdate} = require('../services/movieService');
 const {privateEndpoint} = require('../middlewares/authenticationMiddleware');
 router.get('/',async (req, res) => {
     //console.log(res.user);
@@ -36,6 +36,36 @@ router.post('/create',privateEndpoint,async (req, res) => {
     try {
         req.body.ownerId = res.user._id;
     await saveMovie(req.body);
+    } catch (error) {
+        res.status(400).send(error.message);
+        return;
+    }
+    res.redirect('/');
+})
+router.get('/delete/:id',privateEndpoint, async (req, res) => {
+    try {
+        await deleteMovie(req.params.id);
+    } catch (error) {
+        res.status(400).send(error.message);
+        return;
+    }
+    res.redirect('/');
+});
+
+router.get('/edit/:id', async (req, res) => {
+    const id = req.params.id;
+    const movie = await getMovieById(id);
+    if(movie) {
+        res.render('edit', {movie});
+        return;
+    }
+    res.redirect('404');
+})
+
+router.post('/edit/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        await findByIdAndUpdate(id, req.body);
     } catch (error) {
         res.status(400).send(error.message);
         return;

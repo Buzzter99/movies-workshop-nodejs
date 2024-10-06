@@ -34,8 +34,8 @@
                         </div>
                         {{#if isOwner}}
                         <div class="details-btn">
-                            <button id="edit-button">Edit</button>
-                            <button id="delete-button">Delete</button>
+                            <a href="/edit/{{movie._id}}" id="edit-button" >Edit</a>
+                            <a href="/delete/{{movie._id}}" id="delete-button">Delete</a>
                         </div>
                         {{/if}}
                     </div>
