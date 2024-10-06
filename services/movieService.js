@@ -2,6 +2,12 @@ const Movie = require("../models/Movie");
 async function getMovies(...args) {
   return await Movie.find({}, ...args).lean();
 }
+
+async function getMoviesForHomePage(userId){
+  const movies = await getMovies();
+  movies.forEach(movie => {movie.isOwner = compareOwnershipForMovie(userId, movie);});
+  return movies;
+}
 async function searchMovies(movieTerm) {
   let movies = await getMovies();
   if (movieTerm.title) {
@@ -51,6 +57,9 @@ async function findByIdAndUpdate(id, movie){
 async function deleteMovie(id) {
   await Movie.findByIdAndDelete(id);
 }
+function compareOwnershipForMovie(userId, movie) {
+  return movie?.ownerId === undefined && userId === undefined ? false : movie?.ownerId == userId
+}
 module.exports = {
   getMovies,
   searchMovies,
@@ -60,4 +69,6 @@ module.exports = {
   findByIdAndUpdateMovieForCast,
   findByIdAndUpdate,
   deleteMovie,
+  getMoviesForHomePage,
+  compareOwnershipForMovie
 };

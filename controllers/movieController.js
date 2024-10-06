@@ -1,8 +1,18 @@
 const router = require('express').Router();
-const {getMovies, getMovieById,searchMovies,saveMovie,getMoviesForDetailsPage,deleteMovie,findByIdAndUpdate} = require('../services/movieService');
+const {
+    getMovies, 
+    getMovieById,
+    searchMovies,
+    saveMovie,
+    getMoviesForDetailsPage,
+    deleteMovie,
+    findByIdAndUpdate,
+    getMoviesForHomePage,
+    compareOwnershipForMovie
+} = require('../services/movieService');
 const {privateEndpoint} = require('../middlewares/authenticationMiddleware');
 router.get('/',async (req, res) => {
-    res.render('home', {movies: await getMovies()});
+    res.render('home', {movies: await getMoviesForHomePage(res.user?._id)});
 });
 router.get('/about', (req, res) => {
     res.render('about');
@@ -20,7 +30,7 @@ router.get('/details/:id', async (req, res) => {
         return;
     }
     if(movie) {
-        const isOwner = movie?.ownerId === undefined && res.user?._id === undefined ? false : movie?.ownerId == res.user?._id;
+        const isOwner = compareOwnershipForMovie(res.user?._id, movie);
         res.render('details', {movie, isOwner});
         return;
     }
@@ -30,7 +40,6 @@ router.get('/details/:id', async (req, res) => {
 router.get('/create',privateEndpoint,(req, res) => {
     res.render('create');
 });
-
 router.post('/create',privateEndpoint,async (req, res) => {
     try {
         req.body.ownerId = res.user._id;
@@ -50,7 +59,6 @@ router.get('/delete/:id',privateEndpoint, async (req, res) => {
     }
     res.redirect('/');
 });
-
 router.get('/edit/:id', async (req, res) => {
     const id = req.params.id;
     const movie = await getMovieById(id);
@@ -60,7 +68,6 @@ router.get('/edit/:id', async (req, res) => {
     }
     res.redirect('404');
 })
-
 router.post('/edit/:id', async (req, res) => {
     const id = req.params.id;
     try {

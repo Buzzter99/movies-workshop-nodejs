@@ -28,7 +28,9 @@
                             <h2>Genre: {{genre}}</h2>
                             <p>Description: {{description}}</p>
                             <a href="/details/{{_id}}" class="details">Details</a>
+                            {{#if isOwner}}
                             <a href="/cast/attach/{{_id}}" class="details">Attach</a>
+                            {{/if}}
                         </div>
                     </div>
                     {{else}}
