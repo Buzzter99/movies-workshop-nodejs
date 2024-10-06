@@ -13,6 +13,7 @@ const MovieSchema = new Schema({
       ref:{type: Schema.Types.ObjectId,required: false,ref: 'Cast'},_id: false
     },
   ],
+  ownerId: {type: Schema.Types.ObjectId,required: true,ref: 'User'},
   });
 const Movie = mongoose.model('Movie', MovieSchema)
 module.exports = Movie
