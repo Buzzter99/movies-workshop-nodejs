@@ -4,6 +4,9 @@ const jwt = require('jsonwebtoken');
 const env = require('dotenv').config();
 const JWT_SECRET = process.env.JWT_SECRET;
 async function registerUser({email, password,repeatPassword}) {
+    if(User.findOne({email})) {
+        throw new Error('Email already in use!');
+    }
     if(password !== repeatPassword) {
         throw new Error('Passwords do not match');
     }
