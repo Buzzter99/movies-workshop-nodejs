@@ -33,10 +33,9 @@ router.get('/create',privateEndpoint,(req, res) => {
 router.post('/create',privateEndpoint,async (req, res) => {
     try {
         req.body.ownerId = res.user._id;
-    await saveMovie(req.body);
+        await saveMovie(req.body);
     } catch (error) {
-        res.status(400).send(error.message);
-        return;
+        return res.render('create', {errorMsg: error});
     }
     res.redirect('/');
 })
