@@ -8,12 +8,9 @@ const userSchema = new Schema({
       match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,'Email must be valid']
     },
     password: {type: String,required: [true,'Password field is required'],
-      min: [6,'Password must be at least 6 characters'],
       match: [/^[a-zA-Z0-9]+$/,'Password must be alphanumeric']
     }
   });
-
-
   userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 10);
     next();

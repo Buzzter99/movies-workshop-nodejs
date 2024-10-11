@@ -4,20 +4,23 @@ const jwt = require('jsonwebtoken');
 const env = require('dotenv').config();
 const JWT_SECRET = process.env.JWT_SECRET;
 async function registerUser({email, password,repeatPassword}) {
-    if(User.findOne({email})) {
-        throw new Error('Email already in use!');
-    }
     if(password !== repeatPassword) {
         throw new Error('Passwords do not match');
     }
-    const existing = await User.findOne({email});
+    if(password.length < 6 || repeatPassword.length < 6) {
+        throw new Error('Password must be at least 6 characters');
+    }
+    const existing = await User.findOne({email: email});
     if(existing) {
         throw new Error('Email already in use');
     }
     await new User({email, password}).save();
 }
 async function loginUser({email, password}) {
-    const user = await User.findOne({email});
+    if(!email || !password) {
+        throw new Error('User And Password are required');
+    }
+    const user = await User.findOne({email: email});
     if(!user) {
         throw new Error('No such user');
     }
