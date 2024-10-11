@@ -7,10 +7,11 @@ router.get('/cast/create',privateEndpoint, async (req, res) => {
     res.render('cast-create');
 });
 router.post('/cast/create',privateEndpoint, async (req, res) => {
+    const data = req.body;
     try {
         await createCast(req.body);
     } catch (error) {
-        return res.render('cast-create',{errorMsg: error});
+        return res.render('cast-create',{cast: data,errorMsg: error});
     }
     res.redirect('/');
 });
