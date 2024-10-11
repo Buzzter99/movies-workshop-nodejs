@@ -7,7 +7,11 @@ const {router} = require('./routes');
 const dbConnection = require('./db/db');
 const {authenticationMiddleware} = require('./middlewares/authenticationMiddleware');
 const port = 3000;
-dbConnection.OpenDbConnection()
+try {
+    dbConnection.OpenDbConnection();
+} catch (error) {
+    console.log(error);
+}
 expressConfig(app);
 hbsConfig(app);
 app.use(cookieParser());
